@@ -1,18 +1,18 @@
 # comprog
-
-CC      = cl
-CCFLAGS = /std:c++20 /Zi /MT /EHsc
-
-SRCS  = $(wildcard *.cc)
-MAINS = $(patsubst %.cc, %.exe, $(SRC))
-
+CC      = g++
+CCFLAGS = -g
 .PHONY: clean all
 
+SRCS := $(wildcard *.cc)
+BINS := $(SRCS:%.cc=%.exe)
 
-all: $(MAINS)
+all: $(BINS)
 
-%.exe: $(SRCS)
-	$(CC) $(CCFLAGS) $< /Fe $@
+%.exe: %.o
+	$(CC) $< -o $@
+
+%.o: $.cc
+	$(CC) $(CCFLAGS) -c $<
 
 clean:
-	rm *.exe
+	rm *.exe *.o
