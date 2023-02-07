@@ -1,0 +1,53 @@
+TODO_comprog
+
+https://medium.com/@koheiarai94/60-leetcode-questions-to-prepare-for-coding-interview-8abbb6af589e
+https://www.techinterviewhandbook.org/grind75?order=topics&grouping=none&mode=preferences&weeks=3&hours=9
+
+bst.cc
+ path between nodes in binary tree
+
+avlt.cc
+
+prefix tree/trie
+ anagram dictionary
+
+suffix tree
+
+graph.cc
+ including fibbo heap based dijkstras and A*
+ floyd warshall
+
+intervals
+
+dp
+fibbo numbers
+0/1 knapsack https://www.educative.io/blog/0-1-knapsack-problem-dynamic-solution
+coin change
+longest common substring
+palindrome subsequence
+staircase problem???
+
+write sort pseudocode, add to docs/06sortandsearch
+k way merge sort
+
+sudoku solver
+https://norvig.com/sudoku.html
+
+--------------------------------------------------------------------------------
+
+?@review probability (EECS 477 notes Errichto tutorial: https://youtu.be/0r2D32esF3Y)
+ @solve sum and EV https://youtu.be/U_h3IjreRek
+ @solve EV and sum of small powers https://youtu.be/HDk6zQw0Rdo
+
+interesting tree problems
+@learn binary lifting https://youtu.be/oib-XsjFa-M
+@learn LCA https://youtu.be/dOAxrhAUIhA
+
+interesting geometry, game theory, number theory problems
+@solve tutorial errichto: https://youtu.be/-OPohCQqi_E https://youtu.be/L-Wzglnm4dM https://youtu.be/eMXNWcbw75E https://youtu.be/EHDEvFuYPRQ
+@solve problem in sidebar https://www.geeksforgeeks.org/detect-cycle-in-a-graph/ https://www.geeksforgeeks.org/closest-pair-of-points-onlogn-implementation/
+@solve problems in sidebar https://www.geeksforgeeks.org/least-prime-factor-of-numbers-till-n/
+
+at some point I should review LP
+@review linear programming
+@review/write min cut, max flow (using linear programming)

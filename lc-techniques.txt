@@ -1,0 +1,97 @@
+LC Techniques
+Link: https://grokkingtechinterview.com/7-of-the-most-important-patterns-for-\
+      coding-interviews-5bc52f5758d8
+
+
+1. Two pointer technique
+e.g. two sum, where you need to choose two values from a sorted array that add
+up to some sum. Instead of doing O(N^2) pair-wise comparisons, set a pointer at
+the front and the back. If the sum of the values you are looking at is less than
+the target sum, move the left pointer to a larger value. If the sum of the
+values is larger than the target sum, decrease the right pointer.
+
+
+2. Sliding windows
+e.g. For many substring problems, we are given a string and asked to find a
+substring of it that satisfies some restriction.
+General technique is to use a hashmap and 2 pointers.
+int FindSubstringThatMeetSomeInvariant(std::string s) {
+  std::vector<int> map(128, 0);  // Optionally initialize this
+  int begin = 0, end = 0;
+  int counter, length = 0;
+  while (end < s.size()) {
+    if (map[s[end]] /*some condition like >/<1*/) {
+      // Modify counter here
+      // Counter will usually be used to test invariant
+    }
+    // Modify end and its value in the map
+    while (/*counter condition that violates invariant*/) {
+      // Update length here if finding minimum
+      // Increase begin to meet invariant
+      if (map[s[begin]] /*some condition like >/<1*/) {
+	// Modify counter here to later test invariant
+      }
+      // Modify begin and its value in the map
+    }
+    // Update length here if finding maximum
+  }
+  return length;
+}
+
+
+3. DP and 0/1 Knapsack Pattern with capacity AND volume constraint.
+Given the weights and profits of N items (in the form of 2 arrays).
+You are asked to place them in a knapsack of capacity C with optimal profit.
+It's called 0/1 because you aren't allowed to break the items up.
+If you can break the items up, it's called fractional knapsack.
+Brute force compares all possible combinations. O(2^n). Needed if recursive
+solution is required.
+
+Other DP examples
+- longest common substring
+- palindrome subsequence
+- fibbonaci numbers
+- staircase
+- coin change
+Recursive, combinatorial optimization problems.
+
+
+4. Fast and slow pointers pattern
+Use two pointers to iterate through some container at various speeds
+Also called a hare and tortoise algorithm
+e.g. detecting a cycle in a linked list? Create two pointers. One iterates by
+one, the other by two. If at any point, the two pointers are the same, you have
+a cycle.
+
+
+5. Merge intervals: intervals.cc
+
+
+6. In-place reversal of a linked list
+Maintain three pointers: current node, previous node, next node.
+The window of three pointers moves forward.
+If you don't have an inplace requirement, traverse with a stack.
+
+
+7. Tree BFS
+Use a queue of nodes you haven't visited.
+
+
+8. Tree DFS
+Use a stack of nodes you haven't visited.
+e.g. Flatten binary tree into a linked-list
+
+
+9. k-way merging sorted arrays
+e.g. Given two sorted integer arrays, nums1 and nums2, and the number of
+data elements in each array, m and n, implement a function that merges the
+second array into the first one. You have to modify numes1 in place.
+
+
+10. Using two heaps (either max+min, 2maxes or 2mins)
+e.g. 
+
+
+11. Finding the missing number
+You could use xor
+
