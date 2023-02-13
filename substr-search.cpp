@@ -27,7 +27,6 @@ std::string SearchAlgoToStr(SearchAlgorithm a) {
   return "ERROR(could not convert search algorithm type)";
 }
 
-
 // TODO: learn how this is a good hash function for strings
 // NOTE: this is similar to LCG:
 //   https://en.wikipedia.org/wiki/Linear_congruential_generator
@@ -39,7 +38,6 @@ unsigned int DJBHash(std::string_view s) {
     hash = ((hash << 5) + hash) + s[i];
   return hash;
 }
-
 
 // Preprocesses the query.
 // lps[i] is the length of the longest possible proper prefix.
@@ -64,7 +62,6 @@ std::vector<int> generateLongestProperPrefixTable(std::string_view s) {
   }
   return lps;
 }
-
 
 // Returns -3 unimplemented, -2 on error, -1 if not found and valid result if
 // the value is greater than or equal to 0.
@@ -143,7 +140,6 @@ int FindSubstr(
   }
   return -2;
 }
-
 
 struct SubstrSearchTestCase {
   std::string Name;

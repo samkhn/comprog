@@ -1,6 +1,3 @@
-// Sudoku Solver
-// READ: https://norvig.com/sudoku.html
-
 #include <format>
 #include <fstream>
 #include <iostream>
