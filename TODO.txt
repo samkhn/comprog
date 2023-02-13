@@ -1,39 +1,33 @@
 TODO_comprog
 
-https://medium.com/@koheiarai94/60-leetcode-questions-to-prepare-for-coding-interview-8abbb6af589e
-https://www.techinterviewhandbook.org/grind75?order=topics&grouping=none&mode=preferences&weeks=3&hours=9
+TODO: intervals
+TODO: dp
 
-bst.cc
- path between nodes in binary tree
+TODO: write sort pseudocode, add to docs/06sortandsearch
+TODO: kway-merge-sort
 
-avlt.cc
+TODO: go through problems recommended by https://emre.me/categories/#coding-patterns
 
-prefix tree/trie
- anagram dictionary
+TODO: read https://medium.com/@koheiarai94/60-leetcode-questions-to-prepare-for-coding-interview-8abbb6af589e
+TODO: read https://www.techinterviewhandbook.org/grind75?order=topics&grouping=none&mode=preferences&weeks=3&hours=9
 
-suffix tree
+TODO: suffix-tree? applications?
+TODO: sudoku?
+--------------------------------------------------------------------------------
+GOALS
 
-graph.cc
- including fibbo heap based dijkstras and A*
- floyd warshall
-
-intervals
-
-dp
-fibbo numbers
-0/1 knapsack https://www.educative.io/blog/0-1-knapsack-problem-dynamic-solution
-coin change
-longest common substring
-palindrome subsequence
-staircase problem???
-
-write sort pseudocode, add to docs/06sortandsearch
-k way merge sort
-
-sudoku solver
-https://norvig.com/sudoku.html
+Be able to implement the following in 5-15 mins
+[x] vector (in array and in int) (also is a stack)
+[x] queue (w/ std::deque)
+[ ] *circular buffer and circular queue
+[ ] ?rb tree
+[x] prefix tree (applicable to suffix tree)
+[x] graph traversals
 
 --------------------------------------------------------------------------------
+INBOX
+
+@learn A* https://theory.stanford.edu/~amitp/GameProgramming/index.html
 
 ?@review probability (EECS 477 notes Errichto tutorial: https://youtu.be/0r2D32esF3Y)
  @solve sum and EV https://youtu.be/U_h3IjreRek

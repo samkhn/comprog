@@ -15,15 +15,28 @@ PUSHD %OUTDIR%
 SET DEBUGOPTS=/std:c++20 /Zi /MT /EHsc
 SET OPTIMOPTS=/std:c++20 /O2
 
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\bitmanip.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\bst.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\cirq.cc
-cl.exe %DEBUGOPTS% %PROJECTDIR%\linked-list.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\monotonic-stack.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\sliding-window.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\substr-searches.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\sudoku-solver.cc
-:: cl.exe %OPTIMOPTS% %PROJECTDIR%\tail-recursion.cc
-:: cl.exe %DEBUGOPTS% %PROJECTDIR%\xor.cc
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\bitmanip.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\cirq.cpp
+cl.exe %DEBUGOPTS% %PROJECTDIR%\graph.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\linked-list.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\trie.cpp
+
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\monotonic-stack.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\sliding-window.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\substr-searches.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\two-heaps.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\xor.cpp
+
+REM TODO
+
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\todo_dp.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\todo_intervals.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\todo_kway-merge-sort.cpp
+
+REM Maybe later
+
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\todo_rbtree.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\todo_suffix-tree.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\todo_sudoku.cpp
 
 POPD

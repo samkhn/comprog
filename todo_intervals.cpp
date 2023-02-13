@@ -22,7 +22,7 @@
 // TODO: check if two intervals overlap
 // TODO: merge overlapping intervals
 // TODO: rmq?
-
+// TODO: https://emre.me/coding-patterns/merge-intervals/
 
 int main() {
   return 0;

@@ -27,8 +27,7 @@ std::vector<int> NextGreater(std::vector<int> values) {
   return nextGreater;
 }
 
-std::vector<int> PreviousGreater(std::vector<int> values)
-{
+std::vector<int> PreviousGreater(std::vector<int> values) {
   std::vector<int> stack;  // stores indices.
   std::vector<int> previousGreater(values.size(), -1);
   for (int i = 0; i < values.size(); i++) {
@@ -47,12 +46,12 @@ std::vector<int> PreviousGreater(std::vector<int> values)
 }
 
 // Next smaller element looks like next greater
-//   you keep adding indices to the stack until you encounter a value at (i) that is smaller than the top,
-//   the next smaller value from the index at the top of the stack is i
+//   you keep adding indices to the stack until you encounter a value at (i)
+//   that is smaller than the top, the next smaller value from the index at the
+//   top of the stack is i
 // Previous smaller element looks like previous greater
 
-int main()
-{
+int main() {
   std::vector<int> a{13, 8, 1, 5, 2, 5, 9, 7, 6, 12};
   std::vector<int> ng = NextGreater(a);
   std::vector<int> pg = PreviousGreater(a);

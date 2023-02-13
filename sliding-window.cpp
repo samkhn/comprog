@@ -1,5 +1,7 @@
 // Primer on Array's Sliding Window
 // Source: https://discuss.leetcode.com/topic/30941/here-is-a-10-line-that-can-solve-most-substring-problems
+
+
 // For many substring problems, we are given a string and asked to find a
 // substring of it that satisfies some restriction.
 // General technique is to use a hashmap and 2 pointers.
@@ -28,10 +30,12 @@ int find_substring(std::string s) {
 }
 #endif  // DO NOT DELETE
 
+
 #include <format>
 #include <iostream>
 #include <string>
 #include <vector>
+
 
 std::string LongestSubstrWithAtMostTwoDistinctChars(std::string_view s) {
   std::vector<int> map(128, 0);
