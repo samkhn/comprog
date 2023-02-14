@@ -3,81 +3,92 @@
 // TODO: implement with linked list
 
 #include <cstdlib>
-#include <format>
-#include <iostream>
+#include <cstdio>
+#include <initializer_list>
 
-struct CirQ {
+struct cirq {
 	int capacity;
 	unsigned front_index;
 	unsigned back_index;
 	int *array;
 };
 
-bool IsEmpty(CirQ *q) {
+bool is_empty(cirq *q)
+{
 	return (q->front_index == q->back_index);
 }
 
-int Size(CirQ *q) {
+int size(cirq *q)
+{
 	return (q->front_index <= q->back_index)
 		? q->back_index - q->front_index
 		: q->capacity + q->back_index - q->front_index;
 }
 
-void resize(CirQ *q) {
+void _resize(cirq *q)
+{
 	int *old_array = q->array;
 	int *new_array = (int*)calloc(2*q->capacity, sizeof(int));
 	for (int i = 0; i < q->capacity; ++i)
 		new_array[i] = old_array[i];
 	q->array = new_array;
 	delete(old_array);
-	std::cout << "Resizing"
-		  << " from " << q->capacity
-		  << " to " << q->capacity*2
-		  << "\n";
 	q->back_index = q->capacity;
 	q->capacity *= 2;
 }
 
-void Push(CirQ *q, int value) {
-	q->array[q->back_index] = value;	
+void push(cirq *q, int value)
+{
+	q->array[q->back_index] = value;
 	q->back_index = (q->back_index + 1) % q->capacity;
 	if (q->front_index == q->back_index)
-		resize(q);
-	std::cout << "Inserted " << value << "\n";
+		_resize(q);
 }
 
-void Push(CirQ *q, std::initializer_list<int> values) {
+void push(cirq *q, std::initializer_list<int> values)
+{
 	for (auto it = values.begin(); it != values.end(); ++it)
-		Push(q, *it);
+		push(q, *it);
 }
 
-int Pop(CirQ *q) {
+int pop(cirq *q)
+{
 	int v = q->array[q->front_index];
 	q->front_index = (q->front_index + 1) % q->capacity;
 	return v;
 }
 
-int* Top(CirQ *q) {
+int* top(cirq *q)
+{
 	return &q->array[q->front_index];
 }
 
-int main() {
-	CirQ *q = new CirQ{
-		.capacity{3},
-		.front_index{0},
-		.back_index{0},
-		.array{(int*)calloc(3, sizeof(int))}
+int main()
+{
+	cirq *q = new cirq{
+		3,
+		0,
+		0,
+		(int*)calloc(3, sizeof(int))
 	};
-	std::cout << std::format("Q empty?: {0}\n", IsEmpty(q));
-	Push(q, 10);
-	std::cout << std::format("Q size: {0}\n", Size(q))
-		  << std::format("Q empty?: {0}\n", IsEmpty(q))
-		  << std::format("Q top?: {0}\n", *Top(q));
-	Push(q, 15);
-	Push(q, {-1, 3, 11, 100, 2, 123, -14});
-	Pop(q);
-	std::cout << std::format("Q size: {0}\n", Size(q))
-		  << std::format("Q empty?: {0}\n", IsEmpty(q))
-		  << std::format("Q top?: {0}\n", *Top(q));
+	printf("Q empty? %d\n", is_empty(q));
+	push(q, 10);
+	int *t = top(q);
+	if (!t) {
+		printf("Error: top(q) got nullptr, expected value\n");
+		return -1;
+	}
+	printf("Q size: %d\nQ empty? %d\nQ top? %d\n",
+		size(q), is_empty(q), *t);
+	push(q, 15);
+	push(q, {-1, 3, 11, 100, 2, 123, -14});
+	pop(q);
+	t = top(q);
+	if (!t) {
+		printf("Error: top(q) got nullptr, expected value\n");
+		return -1;
+	}
+	printf("Q size: %d\nQ empty? %d\nQ top? %d\n",
+		size(q), is_empty(q), *t);
 	return 0;
 }

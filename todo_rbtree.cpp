@@ -1,8 +1,7 @@
-/*
- * RBTree, a self balancing binary search tree.
+/* RBTree, a self balancing binary search tree.
  * In the C++ STL, std::set (ordered) and std::map (ordered) are RBTrees.
- * unordered_map and unordered_set are hash tables of kv pairs or k respectively.
- * 
+ * unordered_map and unordered_set are hash tables of kv pairs or k
+ * respectively.
  *
  * Key of invariants:
  * - root is black
@@ -10,58 +9,65 @@
  * - all NIL nodes (leafs) are black
  * - a red node does not have a red child
  * - every path from a given node to its leaves goes through the same number of
- *    black nodes (in other words, we balance the tree on height)
+ *   black nodes (in other words, we balance the tree on height)
  *
  */
 
+// TODO: replace with cstdio.h
 #include <iostream>
 
-struct RBNode {
+struct rb_node {
 	int value;
-	RBNode *left;
-	RBNode *right;
+	rb_node *left;
+	rb_node *right;
 	char color;  // 0 is black, 1 is red.
 };
-static constexpr RBNode kSentinel = RBNode{ 0, nullptr, nullptr, 0 };
+static constexpr rb_node kSentinel = rb_node{ 0, nullptr, nullptr, 0 };
 
-struct RBTree {
-	RBNode *root;
+struct rb_tree {
+	rb_node *root;
 };
 
-// Returns nullptr if not found, otherwise returns a pointer to a valid node
-// that holds the queried value.
-RBNode* Search(RBTree *tree, int value) {
+/* Returns nullptr if not found, otherwise returns a pointer to a valid node
+ * that holds the queried value.
+ */
+rb_node* search(rb_tree *tree, int value)
+{
 	if (!tree)
 		return nullptr;
 	// Look for where the node should be and return a pointer if its
-	//  properly there
+	// properly there
 	return nullptr;
 };
 
-// If value already exists, returns pointer to the node.
-// Otherwise, inserts a value and returns newly inserted value.
-// Returns nullptr on invalid arguments.
-RBNode* Add(RBTree *tree, int value) {
+/* If value already exists, returns pointer to the node.
+ * Otherwise, inserts a value and returns newly inserted value.
+ * Returns nullptr on invalid arguments.
+ */
+rb_node* add(rb_tree *tree, int value)
+{
 	if (!tree)
 		return nullptr;
-	RBNode* loc = Search(tree, value);
+	rb_node* loc = search(tree, value);
 	if (loc)
 		return loc;
-	loc = new RBNode {
-		.value{value},
-		.left{&kSentinel},
-		.right{&kSentinel},
-		.char{0}
+	loc = new rb_node {
+		value,
+		&kSentinel,
+		&kSentinel,
+		0,
 	};
 	// rebalance?
+	return loc;
 }
 
 // Returns 1 if successfully removed entry, 0 if it was not found, -1 on
 // invalid argument
-int Remove(RBTree *tree, int value) {
+int remove(rb_tree *tree, int value)
+{
 	if (!tree)
 		return -1;
-	RBNode* loc = Search(tree, value);
+	rb_node* loc = search(tree, value);
 	if (!loc)
 		return 0;
 	destroy(loc);
@@ -69,47 +75,48 @@ int Remove(RBTree *tree, int value) {
 	return 1;
 }
 
-// RBTree* Deserialize(std::string_view s) { return nullptr; }
-// std::string Serialize(RBTree *t) { return ""; }
+// rb_tree* deserialize(std::string_view s) { return nullptr; }
+// std::string serialize(rb_tree *tree) { return ""; }
 
-int main() {
-	if (Search(nullptr, 0)) {
-		std::cout << "Search(nullptr, 0) got value, want nullptr\n";
+int main()
+{
+	if (search(nullptr, 0)) {
+		std::cout << "search(nullptr, 0) got value, want nullptr\n";
 		return -1;
 	}
-	RBTree *t = new RBTree;
-	if (Search(t, 0)) {
-		std::cout << "Search(t, 0) got value, want nullptr\n";
+	rb_tree *t = new rb_tree;
+	if (search(t, 0)) {
+		std::cout << "search(t, 0) got value, want nullptr\n";
 		return -1;
 	}
 
-	if (!Add(t, 3)) {
-		std::cout << "Failed Add(t, 3)\n";
+	if (!add(t, 3)) {
+		std::cout << "Failed add(t, 3)\n";
 		return -1;
 	}
-	RBNode *root = Search(t, 3);
+	rb_node *root = search(t, 3);
 	if (!(root && root->value == 3 && root->color == 0 &&
 	      root->left == &kSentinel && root->right == &kSentinel)) {
 		std::cout << "Root is not 3 with sentinel children\n";
 		return -1;
 	}
 
-	if (!Add(t, 1)) {
-		std::cout << "Failed Add(t, 1)\n";
+	if (!add(t, 1)) {
+		std::cout << "Failed add(t, 1)\n";
 		return -1;
 	}
-	if (!Add(t, 4)) {
-		std::cout << "Failed Add(t, 4)\n";
+	if (!add(t, 4)) {
+		std::cout << "Failed add(t, 4)\n";
 		return -1;
 	}
-	RBNode *l = Search(t, 1);
+	rb_node *l = search(t, 1);
 	if (root->left != l) {
-		std::cout << "Add(t, 1) did not place 1 as left child of 3\n";
+		std::cout << "add(t, 1) did not place 1 as left child of 3\n";
 		return -1;
 	}
-	RBNode *r = Search(t, 4);
+	rb_node *r = search(t, 4);
 	if (root->right != r) {
-		std::cout << "Add(t, 4) did not place 4 as right child of 3\n";
+		std::cout << "add(t, 4) did not place 4 as right child of 3\n";
 		return -1;
 	}
 	// Search for them and assert their color and value

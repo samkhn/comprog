@@ -6,144 +6,147 @@
  *
  */
 
-#include <format>
 #include <functional>
-#include <iostream>
 #include <queue>
 #include <string>
 #include <vector>
 
-
-struct Result
+struct result {
+	int status; // 1 if fine, 0 if not.
+	float value;
+};
+std::string print(const result &r)
 {
-  int status; // 1 if fine, 0 if not.
-  float value;
+	std::string s;
+	s.append(std::to_string(r.status));
+	s.append(" ");
+	s.append(std::to_string(r.value));
+	s.append(" ");
+	return s;
+}
+
+typedef std::priority_queue<int, std::vector<int>, std::less<int>> max_q;
+typedef std::priority_queue<int, std::vector<int>, std::greater<int>> min_q;
+struct list {
+	int c;
+	max_q left_side_queue;
+	min_q right_side_queue;
 };
 
-std::string Print(const Result &r)
+list*  new_list();
+int    insert(list *l, int v);
+result median(list *l);
+
+result _left_top(list *l);
+result _right_top(list *l);
+
+list *new_list()
 {
-  return std::format( "{0} {1} ", r.status, r.value );
+	list *l = new list;
+	l->c = 0;
+	return l;
 }
 
-using MaxQ = std::priority_queue<int, std::vector<int>, std::less<int>>;
-using MinQ = std::priority_queue<int, std::vector<int>, std::greater<int>>;
-struct List
+int insert(list *l, int v)
 {
-  int c;
-  MaxQ left_side_queue;
-  MinQ right_side_queue;
-};
-List *NewList();
-int Insert(List *l, int v);
-Result Median(List *l);
-Result leftTop(List *l);
-Result rightTop(List *l);
-
-List *NewList()
-{
-  List *l = new List;
-  l->c = 0;
-  return l;
+	if (!l)
+		return -1;
+	result m = median(l);
+	if (!m.status)
+		return -1;
+	if (m.value == 0 || v <= m.value) {
+		l->left_side_queue.push(v);
+		result left = _left_top(l);
+		if (!left.status)
+			return -1;
+		if (v < left.value) {
+			l->right_side_queue.push(left.value);
+			l->left_side_queue.pop();
+		}
+	} else {
+		l->right_side_queue.push(v);
+		result right = _right_top(l);
+		if (!right.status)
+			return -1;
+		if (v > right.value) {
+			l->left_side_queue.push(right.value);
+			l->right_side_queue.pop();
+		}
+	}
+	l->c++;
+	return 1;
 }
 
-int Insert(List *l, int v)
+result _left_top(list *l)
 {
-  if (!l)
-    return -1;
-  Result m = Median(l);
-  if (!m.status)
-    return -1;
-  if (m.value == 0 || v <= m.value) {
-    l->left_side_queue.push(v);
-    Result left = leftTop(l);
-    if (!left.status)
-      return -1;
-    if (v < left.value) {
-      l->right_side_queue.push(left.value);
-      l->left_side_queue.pop();
-    }
-  } else {
-    l->right_side_queue.push(v);
-    Result right = rightTop(l);
-    if (!right.status)
-      return -1;
-    if (v > right.value) {
-      l->left_side_queue.push(right.value);
-      l->right_side_queue.pop();      
-    }
-  }
-  l->c++;
-  return 1;
+	if (!l)
+		return result{0, 0};
+	if (l->left_side_queue.empty())
+		return result{1, 0};
+	return result{1, (float)l->left_side_queue.top()};
 }
 
-Result leftTop(List *l)
+result _right_top(list *l)
 {
-  if (!l)
-    return Result{0, 0};
-  if (l->left_side_queue.empty())
-    return Result{1, 0};
-  return Result{1, (float)l->left_side_queue.top()};
+	if (!l)
+		return result{0, 0};
+	if (l->right_side_queue.empty())
+		return result{1, 0};
+	return result{1, (float)l->right_side_queue.top()};
 }
 
-Result rightTop(List *l)
+result median(list *l)
 {
-  if (!l)
-    return Result{0, 0};
-  if (l->right_side_queue.empty())
-    return Result{1, 0};
-  return Result{1, (float)l->right_side_queue.top()};
-}
-
-Result Median(List *l)
-{
-  if (!l)
-    return Result{0, 0};
-  if (l->c == 0)
-    return Result{1, 0};
-  Result left_top_result = leftTop(l);
-  if (!left_top_result.status)
-    return Result{0, 0};
-  Result right_top_result = rightTop(l);
-  if (!right_top_result.status)
-    return Result{0, 0};
-  if (l->c % 2) {
-    return left_top_result;
-  }
-  return Result{1, ((left_top_result.value + right_top_result.value) / 2)};
+	if (!l)
+		return result{0, 0};
+	if (l->c == 0)
+		return result{1, 0};
+	result left_top_result = _left_top(l);
+	if (!left_top_result.status)
+		return result{0, 0};
+	result right_top_result = _right_top(l);
+	if (!right_top_result.status)
+		return result{0, 0};
+	if (l->c % 2) {
+		return left_top_result;
+	}
+	return result{1, ((left_top_result.value + right_top_result.value) / 2)};
 }
 
 
 int main()
 {
-  List *l = NewList();
-  Result s = Median(l);
-  if (s.value != 0) {
-    std::cout << "Median({}). "
-              << "Got: "<< Print(s) << ". Want: {1 0}\n";
-    std::cout << "L element count: " << l->c << "\n";
-    return -1;
-  }
-  if (!Insert(l, 3)) {
-    std::cout << "Insert(l, 3). " << "Got: fail. Want: success\n";
-    return -1;
-  }
-  s = Median(l);
-  if (s.value != 3) {
-    std::cout << "Median({3}). "
-              << "Got: { "<< Print(s) << "}. Want: { 1 3 }\n";
-    std::cout << "L element count: " << l->c << "\n";
-    return -1;
-  }
-  if (!Insert(l, 1)) {
-    std::cout << "Insert(l, 1). " << "Got: fail. Want: success\n";
-    return -1;
-  }
-  s = Median(l);
-  if (s.value != 2) {
-    std::cout << "Median({1, 3}). "
-              << "Got: { "<< Print(s) << "}. Want: { 1 2 }\n";
-    std::cout << "L element count: " << l->c << "\n";
-    return -1;
-  }	
-  return 0;
+	list *l = new_list();
+
+	result s = median(l);
+	if (s.value != 0) {
+		printf("median({}). Got %s. Want { 1 0 }\ngot.count %d\n",
+			print(s).c_str(), l->c);
+		return -1;
+	}
+
+	if (!insert(l, 3)) {
+		printf("insert({}, 3) got fail, want success\n");
+		return -1;
+	}
+
+	s = median(l);
+	if (s.value != 3) {
+		printf("median({3}). Got %s. Want { 1 3 }\ngot.count %d\n",
+			print(s).c_str(), l->c);
+		return -1;
+	}
+
+	if (!insert(l, 1)) {
+		printf("insert({3}, 1) got fail, want success\n");
+		return -1;
+	}
+
+	s = median(l);
+	if (s.value != 2) {
+		printf("median({1, 3}). Got %s. Want { 1 2 }\ngot.count %d\n",
+			print(s).c_str(), l->c);
+		return -1;
+	}
+	return 0;
 }

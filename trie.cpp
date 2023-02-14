@@ -1,56 +1,60 @@
-// Trie aka retrieval tree aka prefix tree
-// Can be used to implement dictionaries
+/* Trie aka retrieval tree aka prefix tree
+ * Can be used to implement dictionaries
+ */
 
+#include <cstdio>
 #include <deque>
-#include <iostream>
 #include <string>
 #include <unordered_map>
 
 
-struct TrieNode {
+struct trie_node {
 	char value;
-	std::unordered_map<char, TrieNode*> children;
+	std::unordered_map<char, trie_node*> children;
 };
 
-struct Trie {
-	TrieNode* root;
+struct trie {
+	trie_node* root;
 };
-Trie* New(std::initializer_list<std::string_view> words);
-int   Add(Trie *t, std::string_view word);
-int   Exists(Trie *t, std::string_view word);
-int   Remove(Trie *t, std::string_view word);
+
+trie* new_trie(std::initializer_list<std::string_view> words);
+int   add(trie *t, std::string_view word);
+int   exists(trie *t, std::string_view word);
+int   remove(trie *t, std::string_view word);
 
 
-Trie* New(std::initializer_list<std::string_view> words) {
-	Trie *t = new Trie;
-	t->root = new TrieNode{ '^', {} };
-	for (auto it = words.begin(); it != words.end(); ++it) {
-		Add(t, *it);
-	}
+trie* new_trie(std::initializer_list<std::string_view> words)
+{
+	trie *t = new trie;
+	t->root = new trie_node{ '^', {} };
+	for (auto it = words.begin(); it != words.end(); ++it)
+		add(t, *it);
 	return t;
 }
 
 // Returns 1 on success, 0 on invalid argument or failure
-int Add(Trie *t, std::string_view word) {
+int add(trie *t, std::string_view word)
+{
 	if (!t || word.empty())
 		return 0;
-	TrieNode *traverse = t->root;
+	trie_node *traverse = t->root;
 	for (auto c = word.begin(); c != word.end(); ++c) {
 		if (!traverse)
-			traverse = new TrieNode { *c, {} };
+			traverse = new trie_node { *c, {} };
 		auto findc = traverse->children.find(*c);
 		if (findc == traverse->children.end())
-			traverse->children[*c] = new TrieNode{ *c, {} };
+			traverse->children[*c] = new trie_node{ *c, {} };
 		traverse = traverse->children[*c];
 	}
 	return 1;
 }
 
 // Returns 1 if found, 0 if not, -1 on invalid arguments
-int Exists(Trie *t, std::string_view word) {
+int exists(trie *t, std::string_view word)
+{
 	if (!t || word.empty())
 		return -1;
-	TrieNode *traverse = t->root;
+	trie_node *traverse = t->root;
 	for (auto c = word.begin(); c != word.end(); ++c) {
 		if (!traverse)
 			return 0;
@@ -63,10 +67,11 @@ int Exists(Trie *t, std::string_view word) {
 }
 
 // Returns 1 on success, 0 on invalid argument or doesn't exist
-int Remove(Trie *t, std::string_view word) {
+int remove(trie *t, std::string_view word)
+{
 	if (!t || word.empty())
 		return 0;
-	TrieNode *traverse = t->root;
+	trie_node *traverse = t->root;
 	for (auto c = word.begin(); c != word.end(); ++c) {
 		if (!traverse)
 			return 0;
@@ -78,10 +83,11 @@ int Remove(Trie *t, std::string_view word) {
 	return 1;
 }
 
-std::string Serialize(Trie *t) {
-	std::string s = "BFS: ";
-	TrieNode *traverse = t->root;
-	std::deque<TrieNode *> queue;
+std::string serialize(trie *t)
+{
+	std::string s = "Serialized trie: ";
+	trie_node *traverse = t->root;
+	std::deque<trie_node *> queue;
 	for (auto kv : traverse->children)
 		queue.push_back(kv.second);
 	while (!queue.empty()) {
@@ -95,29 +101,30 @@ std::string Serialize(Trie *t) {
 	return s;
 }
 
-int main() {
-	Trie *dict = New({"hello", "world"});
-	if (Exists(dict, "not in dict")) {
-		std::cout << "Not existenct word found in dict\n";
+int main()
+{
+	trie *dict = new_trie({"hello", "world"});
+	if (exists(dict, "not in dict")) {
+		printf("exists() returned word, want nothing\n");
 		return -1;
 	}
-	if (!Exists(dict, "hello")) {
-		std::cout << "hello not found in dict when it should be there\n";
+	if (!exists(dict, "hello")) {
+		printf("exists(hello) returned not found, want found\n");
 		return -1;
 	}
-	if (!Add(dict, "sam")) {
-		std::cout << "Failed to add word sam to dict\n";
+	if (!add(dict, "sam")) {
+		printf("add(sam) failed\n");
 		return -1;
 	}
-	if (!Exists(dict, "sam")) {
-		std::cout << "sam not found in dict when it should be there\n";
+	if (!exists(dict, "sam")) {
+		printf("exists(sam) returned not found, want found\n");
 		return -1;
 	}
-	std::cout << "DICT pre-removal:\n" << Serialize(dict) << "\n";
-	if (!Remove(dict, "world")) {
-		std::cout << "Failed to remove 'world' from dict\n";
+	printf("Dict,  pre-removal(world):\n %s\n", serialize(dict).c_str());
+	if (!remove(dict, "world")) {
+		printf("remove(world) failed\n");
 		return -1;
 	}
-	std::cout << "DICT post-removal of world:\n" << Serialize(dict) << "\n";  
+	printf("Dict, post-removal(world):\n %s\n", serialize(dict).c_str());
 	return 0;
 }

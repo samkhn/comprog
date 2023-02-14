@@ -12,8 +12,8 @@ IF "%1"=="clean" (
 
 PUSHD %OUTDIR%
 
-SET DEBUGOPTS=/std:c++20 /Zi /MT /EHsc
-SET OPTIMOPTS=/std:c++20 /O2
+SET DEBUGOPTS=/std:c++17 /Zi /MT /EHsc
+SET OPTIMOPTS=/std:c++17 /O2
 
 REM cl.exe %DEBUGOPTS% %PROJECTDIR%\bitmanip.cpp
 REM cl.exe %DEBUGOPTS% %PROJECTDIR%\cirq.cpp
@@ -23,7 +23,7 @@ REM cl.exe %DEBUGOPTS% %PROJECTDIR%\trie.cpp
 
 REM cl.exe %DEBUGOPTS% %PROJECTDIR%\monotonic-stack.cpp
 REM cl.exe %DEBUGOPTS% %PROJECTDIR%\sliding-window.cpp
-REM cl.exe %DEBUGOPTS% %PROJECTDIR%\substr-searches.cpp
+REM cl.exe %DEBUGOPTS% %PROJECTDIR%\substr-search.cpp
 REM cl.exe %DEBUGOPTS% %PROJECTDIR%\two-heaps.cpp
 REM cl.exe %DEBUGOPTS% %PROJECTDIR%\xor.cpp
 

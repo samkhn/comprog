@@ -1,5 +1,5 @@
 // Intervals (array subsets)
-// 
+//
 // Here are the six scenarios you'll see:
 // (1) a and b do not overlap: a.end < b.begin
 //  [  a  ][  b  ]
