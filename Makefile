@@ -1,18 +1,16 @@
 # comprog
-CC      = g++
-CCFLAGS = -g
-.PHONY: clean all
+CXXC=g++
+CXXCFLAGS=-g
 
-SRCS := $(wildcard *.cc)
-BINS := $(SRCS:%.cc=%.exe)
+SRCS:=$(wildcard *.cpp)
+BINS:=$(SRCS:%.cpp=%.exe)
 
+.PHONY += all
 all: $(BINS)
 
-%.exe: %.o
-	$(CC) $< -o $@
+%.exe: %.cpp
+	$(CXXC) $(CXXCFLAGS) $< -o $@
 
-%.o: $.cc
-	$(CC) $(CCFLAGS) -c $<
-
+.PHONY += clean
 clean:
-	rm *.exe *.o
+	rm *.exe

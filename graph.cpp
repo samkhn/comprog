@@ -24,7 +24,7 @@ struct edge {
 };
 typedef std::list<std::pair<node, weight>> adjacency_list;
 /* NOTE: Alternative data structures is an adjacency matrix with
- *   std::vector<std::vector<std::pair<node, weight>>; or int** M[][];
+ * std::vector<std::vector<std::pair<node, weight>>; or int** M[][];
  */
 struct graph {
 	bool dired;
@@ -50,9 +50,6 @@ node find_parent(union_find &parents, node node);
 void merge(union_find &parents, node from, node to);
 bool has_cycle(const graph &g);
 
-// TODO: graph MST(const graph &g);
-// TODO: path TopoSortByDeadline(
-//   const graph &g, const std::vector<int, std::pair<int, int>> &schedule);
 path shortest_path(const graph &g, node from, node to);
 path toposort(const graph &g);
 
@@ -247,7 +244,13 @@ path toposort(graph &g)
 	return ts;
 }
 
-path toposortJob(graph &g, const std::vector<std::pair<int, int>> &deadlines)
+graph minimum_spanning_tree(const graph &g)
+{
+	graph mst;
+	return mst;
+}
+
+path job_order(graph &g, const std::vector<std::pair<int, int>> &deadlines)
 {
 	return {};
 }
