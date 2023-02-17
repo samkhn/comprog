@@ -52,5 +52,4 @@ class UnionFind {
   Node Find(Node of);
 };
 
-
-#endif _GRAPH_HPP_
+#endif  // _GRAPH_HPP_

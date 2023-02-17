@@ -1,5 +1,6 @@
 #include "include/graph.hpp"
 
+#include <algorithm>
 #include <deque>
 #include <queue>
 

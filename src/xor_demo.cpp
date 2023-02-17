@@ -16,8 +16,8 @@
 //  then we can remove all pairs of duplicates without affecting results.
 //  a ^ b ^ c ^ b ^ a -> a ^ a ^ b ^ b ^ c = 0 ^ 0 ^ c = c.
 
-
 #include <vector>
+#include <stdio.h>
 
 // Find the missing number
 // You are given an array A of n - 1 integers which are in the range

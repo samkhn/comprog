@@ -7,6 +7,7 @@
 // Time and space complexity is usually O(n)...ish
 
 #include <vector>
+#include <stdio.h>
 
 std::vector<int> NextGreater(std::vector<int> values) {
   std::vector<int> stack;
