@@ -15,7 +15,7 @@ int main() {
 
   int four = 0 | (1UL << 2);
   printf("Four: %d\n", four);
-
+  
   // Toggle bit with ^ aka XOR.
   // XOR flag is high IFF bits have different truth values.
   int five = four ^ (1UL << 0);
