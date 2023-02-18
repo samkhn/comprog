@@ -22,6 +22,9 @@ add_executable(bits bits.cpp)
 # Xor to find one or two missing numbers from a contiguous list
 add_executable(xor xor.cpp)
 
+# Array shifts, rotates, resize (like vector), prefix sum and histograms
+add_executable(array array.cpp)
+
 # cirq, a circular queue, is a core data structure inside the linux kernel.
 # Good for producer, consumer pattern (e.g. kernel driver produces, userspace
 # consumers).
@@ -65,4 +68,4 @@ add_executable(substr_search substr_search.cpp)
 add_executable(two_heap_median two_heap_median.cpp)
 
 # Merge intervals
-add_executable(merge_intervals merge_intervals.cpp)
+# add_executable(merge_intervals merge_intervals.cpp)
