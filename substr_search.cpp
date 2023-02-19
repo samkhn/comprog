@@ -131,6 +131,7 @@ int FindSubstr(SearchType algorithm, std::string_view space,
   if (query.size() > space.size()) return -1;
   switch (algorithm) {
     case SearchType::STL:
+      // TODO(samkhn): This converts size_t to int. Clean this.
       return space.find(query);
     case SearchType::DUMB:
       return findSubstrDumb(space, query);
@@ -175,6 +176,19 @@ void run(SubstrSearchTest *tests, SearchType a) {
 }
 
 int main() {
+  // First, a look at DJBHash
+  std::vector<std::string> hash_tests({
+    "This", "is", "a", "test", "of", "DJBHash", "which", "uses", "5381"
+    });
+  for (const auto &t : hash_tests) {
+    printf("DJBHash(%s) = %d\n", t.c_str(), DJBHash(t));
+  }
+  hash_tests = { "g", "gr", "gro", "grow", "growi", "growin", "growing" };
+  for (const auto &t : hash_tests) {
+    printf("DJBHash(%s) = %d\n", t.c_str(), DJBHash(t));
+  }
+
+  // Then, we evaluate various substring searches
   SubstrSearchTest *tests = new SubstrSearchTest[kTestCount]{
       {"EmptyTestCase", "", "", 0},
       {"EmptySearchQuery", "test", "", 0},
