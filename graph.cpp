@@ -17,17 +17,17 @@ using Node = int;
 
 class UnionFind {
  public:
-  std::unordered_map<Node, Node> parents;
+  std::vector<Node> parents;
 
-  void Union(Node from, Node to) {
-    parents[Find(to)] = Find(from);
+  void Union(Node a, Node b) {
+    parents[Find(b)] = Find(a);
   }
   
-  Node Find(Node of) {
-    if (parents[of] != of) {
-      return Find(parents[of]);
+  Node Find(Node n) {
+    if (parents[n] == n) {
+      return n;
     }
-    return of;
+    return Find(parents[n]);
   }
 };
 
@@ -96,12 +96,16 @@ class Graph {
     } else {
       this->adjacent_nodes[e.u].push_back(
           std::make_pair(e.v, e.weight));
+      this->adjacent_nodes[e.v];
     }
     this->node_count = this->adjacent_nodes.size();
     this->edge_count++;
   }
-  
-  enum class SearchType { BFS, DFS };
+
+  // In BFS and DFS mode, it'll return a path
+  // In FindCycle mode, it'll return a path with {1} or {0} where 1 indicates
+  // a cycle was detected, 0 means no cycle found.
+  enum class SearchType { BFS, DFS, FindCycle };
   Path Search(SearchType type, Node start) const {
     Path p;
     std::deque<Node> q;
@@ -116,7 +120,12 @@ class Graph {
         current = q.back();
         q.pop_back();
       }
-      if (seen.count(current)) continue;
+      if (seen.count(current)) {
+        if (type == SearchType::FindCycle) {
+          return {1};
+        }
+        continue;
+      }
       p.push_back(current);
       seen.insert(current);
       auto an_it = this->adjacent_nodes.find(current);
@@ -128,6 +137,8 @@ class Graph {
         q.push_back(n->first);
       }
     }
+    if (type == SearchType::FindCycle)
+      return {0};
     return p;
   }
   
@@ -192,19 +203,37 @@ class Graph {
   }
   
   bool HasCycle() const {
-    UnionFind uf;
-    for (auto node : this->adjacent_nodes) {
-      uf.parents[node.first] = node.first;
-    }
-    for (auto u : this->adjacent_nodes) {
-      auto neighbors = u.second;
-      for (auto n = neighbors.begin(); n != neighbors.end(); n++) {
-        Node l = uf.Find(u.first);
-        Node r = uf.Find(n->first);
-        if (l == r) {
+    if (!dired) {
+      UnionFind uf;
+      uf.parents.resize(node_count);
+      for (auto node : this->adjacent_nodes) {
+        uf.parents[node.first] = node.first;
+      }
+      for (auto u : this->adjacent_nodes) {
+        auto neighbors = u.second;
+        for (auto n = neighbors.begin(); n != neighbors.end(); n++) {
+          Node l = uf.Find(u.first);
+          Node r = uf.Find(n->first);
+          printf("Edge {%d %d}. Parents are %d %d. ", u.first, n->first, l, r);
+          if (l == r) {
+            printf("Parents are same, edge found\n");
+            return true;
+          }
+          printf("Parents diff. Union(%d, %d) ", l, r);
+          uf.Union(l, r);
+          for (int i = 0; i < uf.parents.size(); i++) {
+            printf("%d ", uf.parents[i]);
+          }
+          printf("\n");
+        }
+      }
+    } else {
+      Path cycle;
+      for (auto node : this->adjacent_nodes) {
+        cycle = Search(SearchType::FindCycle, node.first);
+        if (cycle[0] == 1) {
           return true;
         }
-        uf.Union(l, r);
       }
     }
     return false;
