@@ -33,6 +33,9 @@ add_executable(circular_queue circular_queue.cpp)
 # Pre/post/inorder traversal and de/serializing a binary tree
 add_executable(bst bst.cpp)
 
+# Heaps aka PQs
+add_executable(heap heap.cpp)
+
 # Graphs. Need I say more? Touches on DFS/BFS, Dijkstra's, Topological Sort.
 add_executable(graph graph.cpp)
 
