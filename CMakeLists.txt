@@ -60,3 +60,6 @@ add_executable(two_heap_median two_heap_median.cpp)
 
 # Merge intervals
 # add_executable(merge_intervals merge_intervals.cpp)
+
+# In-place transpose of matrices
+add_executable(transpose transpose.cpp)
