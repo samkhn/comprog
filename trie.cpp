@@ -42,21 +42,6 @@ class Trie {
     return s;
   }
 
-  int Add(std::string_view word) {
-    Node *traverse = root;
-    for (auto c = word.begin(); c != word.end(); ++c) {
-      if (!traverse) {
-        traverse = new Node{*c, {}};
-      }
-      auto findc = traverse->children.find(*c);
-      if (findc == traverse->children.end()) {
-        traverse->children[*c] = new Node{*c, {}};
-      }
-      traverse = traverse->children[*c];
-    }
-    return 1;
-  }
-
   int Exists(std::string_view word) {
     Node *traverse = root;
     for (auto c = word.begin(); c != word.end(); ++c) {
@@ -72,6 +57,21 @@ class Trie {
     return 1;
   }
   
+  int Add(std::string_view word) {
+    Node *traverse = root;
+    for (auto c = word.begin(); c != word.end(); ++c) {
+      if (!traverse) {
+        traverse = new Node{*c, {}};
+      }
+      auto findc = traverse->children.find(*c);
+      if (findc == traverse->children.end()) {
+        traverse->children[*c] = new Node{*c, {}};
+      }
+      traverse = traverse->children[*c];
+    }
+    return 1;
+  }
+
   int Remove(std::string_view word) {
     Node *traverse = root;
     for (auto c = word.begin(); c != word.end(); ++c) {
