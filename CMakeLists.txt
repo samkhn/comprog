@@ -28,20 +28,15 @@ add_executable(array array.cpp)
 # cirq, a circular queue, is a core data structure inside the linux kernel.
 # Good for producer, consumer pattern (e.g. kernel driver produces, userspace
 # consumers).
-# TODO: implement with a linked list too for comparison?
-# TODO: as mentioned in https://docs.kernel.org/core-api/circular-buffers.html
-# the kernel implements it with powers of two, since % is expensive.
-# TODO: memory barrier to avoid single lock or atomic primitives
 add_executable(circular_queue circular_queue.cpp)
 
+# Pre/post/inorder traversal and de/serializing a binary tree
+add_executable(bst bst.cpp)
+
 # Graphs. Need I say more? Touches on DFS/BFS, Dijkstra's, Topological Sort.
-# TODO: Primm's MST? Seems to use the same `relaxing edge` property that
-# Dijkstra's exploits.
 add_executable(graph graph.cpp)
 
 # List aka single/double linked list
-# TODO: Circular double linked lists are used quite a bit in the linux kernel,
-# implement it for fun at some point
 add_executable(forward_list forward_list.cpp)
 
 # Tries aka prefix trees are used for dictionaries and fast string lookups
@@ -57,10 +52,6 @@ add_executable(monotonic_stack monotonic_stack.cpp)
 add_executable(sliding_window sliding_window.cpp)
 
 # Substring search w/ Rabin Karp and Knuth Morris Pratt
-# TODO: Upon further inspection, I don't think I implemented the rolling hash
-# properly so I'll need to check.
-# TODO: benchmark on very long strings (where we can observe the benefits
-# of more complex algorithms/prunings).
 add_executable(substr_search substr_search.cpp)
 
 # Use two heaps to find median
