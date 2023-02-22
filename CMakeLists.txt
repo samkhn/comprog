@@ -48,7 +48,10 @@ add_executable(forward_list forward_list.cpp)
 # Tries aka prefix trees are used for dictionaries and fast string lookups
 add_executable(trie trie.cpp)
 
-# Techniques
+# Techniques/applications
+
+# Job scheduling w/ topological sort
+add_executable(schedule schedule.cpp)
 
 # Monotonic Stack to find next or previous greater elements
 # I don't really like it but it seems interesting
@@ -60,10 +63,10 @@ add_executable(sliding_window sliding_window.cpp)
 # Substring search w/ Rabin Karp and Knuth Morris Pratt
 add_executable(substr_search substr_search.cpp)
 
-# Use two heaps to find median
-# This one was nice, interesting, dope, <insert other positive adjectives>
+# Use two heaps to find median. Pretty interesting.
 add_executable(two_heap_median two_heap_median.cpp)
 
+# Merging sorted lists with PQs
 add_executable(kway-mergesort kway-mergesort.cpp)
 
 # In-place transpose of matrices using "follow-the-cycles"

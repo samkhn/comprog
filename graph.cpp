@@ -302,27 +302,5 @@ int main() {
       "TopoSort: %s\n\n",
       dag.Print().c_str(), dag.HasCycle(), Print(dag.TopoSort()).c_str());
 
-  // TODO: Job schedule demo
-  // Graph job;
-  // job.Init(/* dired = */ true,
-  //      { /* edges = */
-  //        {0, -1, 1},
-  //        {2, 4, 1},
-  //        {1, 3, 1},
-  //        {1, 4, 1},
-  //        {3, 6, 1},
-  //        {5, 6, 1},
-  //        {5, 7, 1},
-  //        {7, 8, 1},
-  //        {6, 8, 1}
-  //      });
-  // // job_time[i] means that job or node i begins at job_time[i].first and
-  // ends
-  // //  at job_time[i].end.
-  // std::vector<std::pair<int, int>> job_time = {
-  //   {9, 10}, {11, 16}, {17, 18}, {12, 15}, {13, 14}, {1, 8}, {6, 7}, {2, 5},
-  //   {3, 4}
-  // };
-  // Path want_schedule = {2, 1, 3, 4, 0, 5, 6, 7, 8};
   return 0;
 }
