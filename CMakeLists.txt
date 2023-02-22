@@ -39,6 +39,9 @@ add_executable(heap heap.cpp)
 # Graphs. Need I say more? Touches on DFS/BFS, Dijkstra's, Topological Sort.
 add_executable(graph graph.cpp)
 
+# Comparing, sorting and merging intervals
+add_executable(intervals intervals.cpp)
+
 # List aka single/double linked list
 add_executable(forward_list forward_list.cpp)
 
@@ -61,8 +64,7 @@ add_executable(substr_search substr_search.cpp)
 # This one was nice, interesting, dope, <insert other positive adjectives>
 add_executable(two_heap_median two_heap_median.cpp)
 
-# Comparing, sortin and merging intervals
-add_executable(intervals intervals.cpp)
+add_executable(kway-mergesort kway-mergesort.cpp)
 
-# In-place transpose of matrices
+# In-place transpose of matrices using "follow-the-cycles"
 add_executable(transpose transpose.cpp)
