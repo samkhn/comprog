@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <iostream>
+#include <iterator>
 #include <queue>
 #include <string>
 #include <vector>
