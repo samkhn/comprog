@@ -7,8 +7,8 @@
 #include <vector>
 
 // Returns schedule without all jobs if cycle detected.
-std::vector<int> Schedule(
-    int job_count, const std::vector<std::pair<int, int>> &ordering) {
+std::vector<int> Schedule(int job_count,
+                          const std::vector<std::pair<int, int>> &ordering) {
   std::vector<int> ts;
   // source will be node(s) with in-degree 0
   std::vector<int> indegrees(job_count, 0);
@@ -36,7 +36,8 @@ std::vector<int> Schedule(
     seen[current] = true;
     const std::vector<int> &neighbors = prereqs[current];
     for (int i = 0; i < neighbors.size(); i++) {
-      if (!prereqs[current][i]) continue;
+      if (!prereqs[current][i])
+        continue;
       indegrees[i]--;
       if (!indegrees[i]) {
         q.push_back(i);
@@ -81,19 +82,17 @@ struct ScheduleTest {
 
 int main() {
   std::vector<ScheduleTest> tests = {
-    {"Simple", 2, { {0, 1} }, {0, 1}},
-    {"Cycle", 2, { {0, 1}, {1, 0} }, {-1}},
-    {"Cycle2", 3, { {0, 1}, {2, 1}, {1, 0} }, {-1}},
-    // {"Multiple", 5, {{4, 1}, {4, 2}, {2, 3}, {2, 1}}, {}},
+      {"Simple", 2, {{0, 1}}, {0, 1}},
+      {"Cycle", 2, {{0, 1}, {1, 0}}, {-1}},
+      {"Cycle2", 3, {{0, 1}, {2, 1}, {1, 0}}, {-1}},
+      // {"Multiple", 5, {{4, 1}, {4, 2}, {2, 3}, {2, 1}}, {}},
   };
   std::vector<int> got;
-  for (const auto& t: tests) {
+  for (const auto &t : tests) {
     got = Schedule(t.num_jobs, t.job_timing);
     if (!Equal(got, t.want)) {
-      std::cout << "Failed " << t.name
-                << ". Got: " << ToString(got)
-                << ". Want: " << ToString(t.want)
-                << "\n";
+      std::cout << "Failed " << t.name << ". Got: " << ToString(got)
+                << ". Want: " << ToString(t.want) << "\n";
     } else {
       std::cout << "Passed " << t.name << "\n";
     }
