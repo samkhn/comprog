@@ -12,17 +12,17 @@ struct StatusOrInt32 {
 };
 
 class Vector {
- public:
+public:
   Vector() {
     size_ = 0;
     capacity_ = 8;
-    array_ = (int32_t*)malloc(capacity_ * sizeof(int32_t));
+    array_ = (int32_t *)malloc(capacity_ * sizeof(int32_t));
   }
-  
+
   void Resize(uint32_t new_size) {
     printf("Resizing from %d to %d\n", capacity_, new_size);
     capacity_ = new_size;
-    int32_t* new_array = (int32_t*)malloc(capacity_ * sizeof(int32_t));
+    int32_t *new_array = (int32_t *)malloc(capacity_ * sizeof(int32_t));
     for (uint32_t i = 0; i < size_; ++i) {
       new_array[i] = array_[i];
     }
@@ -42,9 +42,9 @@ class Vector {
     }
     array_[size_++] = v;
   }
-  
+
   void Push(std::initializer_list<int32_t> vs) {
-    for (const int32_t& v : vs) {
+    for (const int32_t &v : vs) {
       Push(v);
     }
   }
@@ -56,24 +56,22 @@ class Vector {
     return {0, array_[i]};
   };
 
-  uint32_t Size() const {
-    return size_;
-  };
-  
+  uint32_t Size() const { return size_; };
+
   void RotateRightBy(uint32_t by) {
     while (by != 0) {
       RotateRight(/*discard?=*/false);
       by--;
     }
   }
-  
+
   void RotateLeftBy(uint32_t by) {
     while (by != 0) {
       RotateLeft(/*discard?=*/false);
       by--;
     }
   }
-  
+
   void ShiftRightBy(uint32_t by) {
     while (by != 0) {
       RotateRight(/*discard?=*/true);
@@ -104,7 +102,8 @@ class Vector {
     }
     return s;
   }
- private:
+
+private:
   int32_t *array_;
   uint32_t size_;
   uint32_t capacity_;
@@ -113,9 +112,9 @@ class Vector {
     if (!size_) {
       return;
     }
-    int32_t v = array_[size_-1];
+    int32_t v = array_[size_ - 1];
     for (uint32_t i = size_; i > 0; --i) {
-      array_[i] = array_[i-1];
+      array_[i] = array_[i - 1];
     }
     if (discard) {
       array_[0] = 0;
@@ -130,7 +129,7 @@ class Vector {
     }
     int32_t v = array_[0];
     for (uint32_t i = 0; i < size_; ++i) {
-      array_[i] = array_[i+1];
+      array_[i] = array_[i + 1];
     }
     if (discard) {
       array_[size_] = 0;
@@ -172,9 +171,9 @@ Histogram ToHistogram(const Vector &v) {
   return h;
 }
 
-std::string Print(const Histogram& h) {
+std::string Print(const Histogram &h) {
   std::string s = "";
-  for (auto &kv : h ) {
+  for (auto &kv : h) {
     s.append("Value ");
     s.append(std::to_string(kv.first));
     s.append(" was observed ");

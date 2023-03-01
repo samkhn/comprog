@@ -6,23 +6,21 @@
 #include <stdlib.h>
 
 class CircularQueue {
- public:
+public:
   int capacity;
   unsigned front_index;
   unsigned back_index;
   // TODO: replace int* with smart pointer?
   int *array;
 
-  bool Empty() {
-    return (this->front_index == this->back_index);
-  }
-  
-  int  Size() {
+  bool Empty() { return (this->front_index == this->back_index); }
+
+  int Size() {
     return (this->front_index <= this->back_index)
-        ? this->back_index - this->front_index
-        : this->capacity + this->back_index - this->front_index;
+               ? this->back_index - this->front_index
+               : this->capacity + this->back_index - this->front_index;
   }
-  
+
   void Push(int value) {
     this->array[this->back_index] = value;
     this->back_index = (this->back_index + 1) % this->capacity;
@@ -30,22 +28,18 @@ class CircularQueue {
       resize();
     }
   }
-  
+
   void Push(std::initializer_list<int> values) {
     for (auto it = values.begin(); it != values.end(); ++it) {
       Push(*it);
     }
   }
-  
-  int Top() {
-    return this->array[this->front_index];
-  }
-  
-  void Pop() {
-    this->front_index = (this->front_index + 1) % this->capacity;
-  }
 
- private:
+  int Top() { return this->array[this->front_index]; }
+
+  void Pop() { this->front_index = (this->front_index + 1) % this->capacity; }
+
+private:
   void resize() {
     int *old_array = this->array;
     int *new_array = (int *)calloc(2 * this->capacity, sizeof(int));
@@ -60,12 +54,7 @@ class CircularQueue {
 };
 
 int main() {
-  CircularQueue *q = new CircularQueue{
-    3,
-    0,
-    0,
-    (int *)calloc(3, sizeof(int))
-  };
+  CircularQueue *q = new CircularQueue{3, 0, 0, (int *)calloc(3, sizeof(int))};
   printf("Q empty? %d\n", q->Empty());
   q->Push(10);
   printf("Q size: %d\nQ top? %d\n", q->Size(), q->Top());

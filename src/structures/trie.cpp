@@ -1,9 +1,9 @@
 // Tries
 
 #include <deque>
-#include <unordered_map>
 #include <stdio.h>
 #include <string>
+#include <unordered_map>
 
 struct Node {
   char value;
@@ -12,10 +12,9 @@ struct Node {
 
 class Trie {
   Node *root;
- public:
-  void New() {
-    this->root = new Node{'^', {}};
-  }
+
+public:
+  void New() { this->root = new Node{'^', {}}; }
   void New(std::initializer_list<std::string_view> words) {
     New();
     for (auto it = words.begin(); it != words.end(); ++it) {
@@ -56,7 +55,7 @@ class Trie {
     }
     return 1;
   }
-  
+
   int Add(std::string_view word) {
     Node *traverse = root;
     for (auto c = word.begin(); c != word.end(); ++c) {
@@ -87,7 +86,6 @@ class Trie {
     return 1;
   }
 };
-
 
 int main() {
   Trie *dict = new Trie;

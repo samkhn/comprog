@@ -6,23 +6,21 @@
 #include <deque>
 #include <list>
 #include <queue>
+#include <stdio.h>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <stdio.h>
 #include <utility>
 #include <vector>
 
 using Node = int;
 
 class UnionFind {
- public:
+public:
   std::vector<Node> parents;
 
-  void Union(Node a, Node b) {
-    parents[Find(b)] = Find(a);
-  }
-  
+  void Union(Node a, Node b) { parents[Find(b)] = Find(a); }
+
   Node Find(Node n) {
     if (parents[n] == n) {
       return n;
@@ -51,7 +49,7 @@ std::string Print(const Path &p) {
 }
 
 class Graph {
- public:
+public:
   bool dired;
   std::size_t node_count;
   std::size_t edge_count;
@@ -82,6 +80,7 @@ class Graph {
     }
     return elements;
   }
+
   void Init(bool dired, std::initializer_list<Edge> edges) {
     this->dired = dired;
     this->node_count = 0;
@@ -90,12 +89,12 @@ class Graph {
       AddEdge(*edge_it);
     }
   }
+
   void AddEdge(Edge e) {
     if (e.v == -1) {
       this->adjacent_nodes[e.u];
     } else {
-      this->adjacent_nodes[e.u].push_back(
-          std::make_pair(e.v, e.weight));
+      this->adjacent_nodes[e.u].push_back(std::make_pair(e.v, e.weight));
       this->adjacent_nodes[e.v];
     }
     this->node_count = this->adjacent_nodes.size();
@@ -106,6 +105,7 @@ class Graph {
   // In FindCycle mode, it'll return a path with {1} or {0} where 1 indicates
   // a cycle was detected, 0 means no cycle found.
   enum class SearchType { BFS, DFS, FindCycle };
+
   Path Search(SearchType type, Node start) const {
     Path p;
     std::deque<Node> q;
@@ -141,7 +141,7 @@ class Graph {
       return {0};
     return p;
   }
-  
+
   Path ShortestPath(Node from, Node to) const {
     std::unordered_set<Node> seen;
     std::vector<Node> pred_node(this->node_count + 1, -1);
@@ -188,20 +188,7 @@ class Graph {
     std::reverse(path.begin(), path.end());
     return path;
   }
-  
-  Path TopoSort() {
-    Path ts;
-    std::unordered_set<Node> visited;
-    for (auto u : this->adjacent_nodes) {
-      if (visited.count(u.first)) {
-        continue;
-      }
-      TopoSortRecurse(ts, visited, u.first);
-    }
-    std::reverse(ts.begin(), ts.end());
-    return ts;
-  }
-  
+
   bool HasCycle() const {
     if (!dired) {
       UnionFind uf;
@@ -241,8 +228,21 @@ class Graph {
 
   // TODO: MST
   Graph MST() const;
+  
+  Path TopoSort() {
+    Path ts;
+    std::unordered_set<Node> visited;
+    for (auto u : this->adjacent_nodes) {
+      if (visited.count(u.first)) {
+        continue;
+      }
+      TopoSortRecurse(ts, visited, u.first);
+    }
+    std::reverse(ts.begin(), ts.end());
+    return ts;
+  }
 
- private:
+private:
   void TopoSortRecurse(Path &ts, std::unordered_set<Node> &visited, Node n) {
     visited.insert(n);
     auto neighbors = this->adjacent_nodes.find(n);
@@ -262,45 +262,44 @@ class Graph {
 int main() {
   Graph ug;
   ug.Init(/*dired=*/false, /*edges=*/
-       {{0, 1, 1}, {0, 2, 1}, {1, 2, 1}, {2, 0, 1}, {2, 3, 1}, {3, 3, 1}});
-  printf(
-      "Undirected %s\n"
-      "BFS from 2: %s\n"
-      "DFS from 1: %s\n"
-      "Has cycle? %d\n\n",
-      ug.Print().c_str(), Print(ug.Search(Graph::SearchType::BFS, 2)).c_str(),
-      Print(ug.Search(Graph::SearchType::DFS, 1)).c_str(), ug.HasCycle());
+          {{0, 1, 1}, {0, 2, 1}, {1, 2, 1}, {2, 0, 1}, {2, 3, 1}, {3, 3, 1}});
+  printf("Undirected %s\n"
+         "BFS from 2: %s\n"
+         "DFS from 1: %s\n"
+         "Has cycle? %d\n\n",
+         ug.Print().c_str(),
+         Print(ug.Search(Graph::SearchType::BFS, 2)).c_str(),
+         Print(ug.Search(Graph::SearchType::DFS, 1)).c_str(), ug.HasCycle());
 
   Graph dg;
   dg.Init(/*dired=*/true, /*edges=*/
-       {{0, 1, 10},
-        {0, 2, 5},
-        {1, 2, 2},
-        {2, 1, 3},
-        {1, 3, 1},
-        {2, 3, 9},
-        {2, 4, 2},
-        {3, 4, 4},
-        {4, 3, 6},
-        {4, 0, 7}});
-  printf(
-      "Directed %s\n"
-      "BFS from 0: %s\n"
-      "DFS from 0: %s\n"
-      "Has cycle? %d\n"
-      "ShortestPath(0->4): %s\n\n",
-      dg.Print().c_str(), Print(dg.Search(Graph::SearchType::BFS, 2)).c_str(),
-      Print(dg.Search(Graph::SearchType::DFS, 1)).c_str(), dg.HasCycle(),
-      Print(dg.ShortestPath(0, 4)).c_str());
+          {{0, 1, 10},
+           {0, 2, 5},
+           {1, 2, 2},
+           {2, 1, 3},
+           {1, 3, 1},
+           {2, 3, 9},
+           {2, 4, 2},
+           {3, 4, 4},
+           {4, 3, 6},
+           {4, 0, 7}});
+  printf("Directed %s\n"
+         "BFS from 0: %s\n"
+         "DFS from 0: %s\n"
+         "Has cycle? %d\n"
+         "ShortestPath(0->4): %s\n\n",
+         dg.Print().c_str(),
+         Print(dg.Search(Graph::SearchType::BFS, 2)).c_str(),
+         Print(dg.Search(Graph::SearchType::DFS, 1)).c_str(), dg.HasCycle(),
+         Print(dg.ShortestPath(0, 4)).c_str());
 
   Graph dag;
   dag.Init(/*dired=*/true, /*edges=*/
-       {{5, 2, 1}, {5, 0, 1}, {4, 0, 1}, {4, 1, 1}, {2, 3, 1}, {3, 1, 1}});
-  printf(
-      "DAG %s\n"
-      "Has cycle?: %d\n"
-      "TopoSort: %s\n\n",
-      dag.Print().c_str(), dag.HasCycle(), Print(dag.TopoSort()).c_str());
+           {{5, 2, 1}, {5, 0, 1}, {4, 0, 1}, {4, 1, 1}, {2, 3, 1}, {3, 1, 1}});
+  printf("DAG %s\n"
+         "Has cycle?: %d\n"
+         "TopoSort: %s\n\n",
+         dag.Print().c_str(), dag.HasCycle(), Print(dag.TopoSort()).c_str());
 
   return 0;
 }

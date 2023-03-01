@@ -16,18 +16,20 @@
 //  then we can remove all pairs of duplicates without affecting results.
 //  a ^ b ^ c ^ b ^ a -> a ^ a ^ b ^ b ^ c = 0 ^ 0 ^ c = c.
 
-#include <vector>
 #include <stdio.h>
+#include <vector>
 
 // Find the missing number
 // You are given an array A of n - 1 integers which are in the range
 // between 1 and n. All numbers appear exactly once, except one number,
 // which is missing.
 // Assumes the vector goes from 1 to n where n is a posint > 1.
-int find_missing(const std::vector<int>& container, int n) {
+int find_missing(const std::vector<int> &container, int n) {
   int result = 0;
-  for (int i = 1; i <= n; ++i) result ^= i;
-  for (auto it = container.begin(); it != container.end(); ++it) result ^= *it;
+  for (int i = 1; i <= n; ++i)
+    result ^= i;
+  for (auto it = container.begin(); it != container.end(); ++it)
+    result ^= *it;
   return result;
 }
 
@@ -40,7 +42,7 @@ int find_missing(const std::vector<int>& container, int n) {
 // We can then form two subarrays where in the first subarray, all values have
 //  the same bit set to 1 as u while in the second subarray all the values have
 //  the bit set to 0.
-std::pair<int, int> find_two_missing(const std::vector<int>& container, int n) {
+std::pair<int, int> find_two_missing(const std::vector<int> &container, int n) {
   int missings = find_missing(container, n);
   int split_index_mask = missings & ~(missings - 1);
   int u = 0, v = 0;

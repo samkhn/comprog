@@ -45,27 +45,27 @@ int Count(Tree *t) {
   if (!t) {
     return 0;
   }
-  return 1+Count(t->left)+Count(t->right);
+  return 1 + Count(t->left) + Count(t->right);
 }
 
 int Height(Tree *t) {
   if (!t) {
     return 0;
   }
-  return 1+std::max(Height(t->left), Height(t->right));
+  return 1 + std::max(Height(t->left), Height(t->right));
 }
 
 bool Exists(Tree *t, int value) {
   if (!t) {
     return false;
   }
-  return (value == t->value)
-      || Exists(t->left, value) || Exists(t->right, value);
+  return (value == t->value) || Exists(t->left, value) ||
+         Exists(t->right, value);
 }
 
-Tree* Insert(Tree *t, int value) {
+Tree *Insert(Tree *t, int value) {
   if (!t) {
-    return new Tree{ value, nullptr, nullptr };
+    return new Tree{value, nullptr, nullptr};
   }
   if (value < t->value) {
     t->left = Insert(t->left, value);
@@ -75,7 +75,7 @@ Tree* Insert(Tree *t, int value) {
   return t;
 }
 
-Tree* Delete(Tree *t, int value) {
+Tree *Delete(Tree *t, int value) {
   if (!t) {
     return nullptr;
   }
@@ -152,15 +152,15 @@ std::string ToString(Tree *t, Traversal order) {
     return s;
   }
   switch (order) {
-    case Traversal::InOrder:
-      inOrderTreeToString(t, &s);
-      break;
-    case Traversal::PreOrder:
-      preOrderTreeToString(t, &s);
-      break;
-    case Traversal::PostOrder:
-      postOrderTreeToString(t, &s);
-      break;
+  case Traversal::InOrder:
+    inOrderTreeToString(t, &s);
+    break;
+  case Traversal::PreOrder:
+    preOrderTreeToString(t, &s);
+    break;
+  case Traversal::PostOrder:
+    postOrderTreeToString(t, &s);
+    break;
   }
   return s;
 }
@@ -191,64 +191,52 @@ std::string Serialize(Tree *t) {
   return s;
 }
 
-Tree* deserialize(std::istringstream &s) {
+Tree *deserialize(std::istringstream &s) {
   std::string v;
   s >> v;
   if (v == kDelimiter) {
     return nullptr;
   }
-  return new Tree { std::stoi(v),
-    deserialize(s),
-    deserialize(s)
-  };
+  return new Tree{std::stoi(v), deserialize(s), deserialize(s)};
 }
 
-Tree* Deserialize(std::string &s) {
+Tree *Deserialize(std::string &s) {
   std::istringstream in(s);
   return deserialize(in);
 }
 
-
 // Test cases
 
-Tree* generate_single_node() {
-  return new Tree {1, nullptr, nullptr };
-}
+Tree *generate_single_node() { return new Tree{1, nullptr, nullptr}; }
 
-Tree* generate_left_child_only() {
-  return new Tree {1, new Tree{ 2, nullptr, nullptr }, nullptr };
+Tree *generate_left_child_only() {
+  return new Tree{1, new Tree{2, nullptr, nullptr}, nullptr};
 }
 static const int left_child_only_count = 2;
 static const int left_child_only_height = 2;
 
-Tree* generate_right_child_only() {
-  return new Tree {1, nullptr, new Tree{ 2, nullptr, nullptr } };
+Tree *generate_right_child_only() {
+  return new Tree{1, nullptr, new Tree{2, nullptr, nullptr}};
 }
 static const int right_child_only_count = 2;
 static const int right_child_only_height = 2;
 
-Tree* generate_invalid_tree() {
-  return new Tree { 5,
-    new Tree{ 3, nullptr, nullptr },
-    new Tree{ 6,
-      new Tree { 2, nullptr, nullptr },
-      new Tree { 10, nullptr, nullptr }
-    }
-  };
+Tree *generate_invalid_tree() {
+  return new Tree{5, new Tree{3, nullptr, nullptr},
+                  new Tree{6, new Tree{2, nullptr, nullptr},
+                           new Tree{10, nullptr, nullptr}}};
 }
 static const int invalid_count = 5;
 static const int invalid_height = 3;
 
-Tree* generate_valid_tree() {
-  return new Tree { 5,
-    new Tree{ 3, new Tree { 2, nullptr, nullptr }, nullptr },
-    new Tree{ 6, nullptr, new Tree { 10, nullptr, nullptr } }
-  };
+Tree *generate_valid_tree() {
+  return new Tree{5, new Tree{3, new Tree{2, nullptr, nullptr}, nullptr},
+                  new Tree{6, nullptr, new Tree{10, nullptr, nullptr}}};
 }
 static const int valid_count = 5;
 static const int valid_height = 3;
 
-int main() {  
+int main() {
   // Count tree nodes
   int c = 0;
   if (Count(nullptr)) {
@@ -264,7 +252,8 @@ int main() {
   }
   c = Count(generate_right_child_only());
   if (c != right_child_only_count) {
-    printf("Count(right_child_only) = %d. Want %d\n", c, right_child_only_count);
+    printf("Count(right_child_only) = %d. Want %d\n", c,
+           right_child_only_count);
   }
   c = Count(generate_valid_tree());
   if (c != valid_count) {
@@ -285,11 +274,11 @@ int main() {
   if (h != invalid_height) {
     printf("Height(invalid) = %d. Want %d\n", h, invalid_height);
   }
-  
+
   // Validate tree
   if (!IsValid(generate_valid_tree())) {
     printf("Valid tree called invalid\n");
-  }  
+  }
   if (IsValid(generate_invalid_tree())) {
     printf("Invalid tree called valid\n");
   }

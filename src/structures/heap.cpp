@@ -22,17 +22,17 @@ class BinaryHeap {
   std::function<bool(int, int)> comp_;
 
   void fixUp(int i) {
-    while (i > 0 && comp_(data_[i/2], data_[i])) {
-      std::swap(data_[i/2], data_[i]);
+    while (i > 0 && comp_(data_[i / 2], data_[i])) {
+      std::swap(data_[i / 2], data_[i]);
       i /= 2;
     }
   }
 
   void fixDown(int i) {
-    std::size_t last = Size()-1;
-    while (2*i+1 <= last) {
-      int c = 2*i+1;
-      if (c < last && comp_(data_[c], data_[c+1])) {
+    std::size_t last = Size() - 1;
+    while (2 * i + 1 <= last) {
+      int c = 2 * i + 1;
+      if (c < last && comp_(data_[c], data_[c + 1])) {
         c++;
       }
       if (!comp_(data_[i], data_[c])) {
@@ -42,25 +42,26 @@ class BinaryHeap {
       i = c;
     }
   }
- public:
+
+public:
   BinaryHeap() { comp_ = Lesser; }
   BinaryHeap(std::function<bool(int, int)> comp) : comp_(comp) {}
-  
+
   bool Empty() const { return data_.empty(); }
   std::size_t Size() const { return data_.size(); }
   int Top() const { return data_[0]; }
-  
+
   void Push(int v) {
     data_.push_back(v);
-    fixUp(data_.size()-1);
+    fixUp(data_.size() - 1);
   }
-  
+
   void Pop() {
     data_[0] = data_.back();
     data_.pop_back();
     fixDown(0);
   }
-  
+
   std::string ToString() const {
     std::string s = "";
     if (Empty()) {
@@ -77,8 +78,7 @@ class BinaryHeap {
 
 // q is passed by value because there is no way to traverse the PQ without
 // modifying the original.
-template <typename Q>
-std::string ToString(Q q) {
+template <typename Q> std::string ToString(Q q) {
   std::string s = "";
   s.append(std::to_string(q.top()));
   q.pop();
@@ -99,10 +99,10 @@ int NthLargestItem(const std::vector<int> &v, int n) {
 }
 
 int main() {
-  std::vector<int> v {1, 5, 12, 4};
+  std::vector<int> v{1, 5, 12, 4};
   std::priority_queue<int> maxq(v.begin(), v.end());
-  std::priority_queue<int, std::vector<int>, std::greater<int>>
-      minq(v.begin(), v.end());
+  std::priority_queue<int, std::vector<int>, std::greater<int>> minq(v.begin(),
+                                                                     v.end());
 
   std::cout << "\nv: ";
   std::copy(v.begin(), v.end(), std::ostream_iterator<int>(std::cout, " "));
@@ -113,7 +113,7 @@ int main() {
   std::cout << "maxq (default)(std::less<int>): " << ToString(maxq) << "\n";
   std::cout << "minq (std::greater<int>): " << ToString(minq) << "\n";
 
-  BinaryHeap h;  // default aka h(Lesser);
+  BinaryHeap h; // default aka h(Lesser);
   h.Push(1);
   std::cout << "BinaryMaxHeap({1}). Top is " << h.Top() << "\n";
   h.Push(5);
@@ -136,6 +136,6 @@ int main() {
   std::cout << "Post Push(4), Top is " << mh.Top() << "\n";
   mh.Pop();
   std::cout << "Post Pop(), Top is " << mh.Top() << "\n\n";
-  
+
   return 0;
 }

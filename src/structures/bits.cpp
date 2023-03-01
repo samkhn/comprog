@@ -10,12 +10,12 @@ int main() {
   printf("One: %d\n", one);
 
   // Clear a bit to 0 with &~1 or |0
-  int clear = one & ~(1UL << 0);  // Clears the nth bit of one
+  int clear = one & ~(1UL << 0); // Clears the nth bit of one
   printf("Back to zero: %d\n", clear);
 
   int four = 0 | (1UL << 2);
   printf("Four: %d\n", four);
-  
+
   // Toggle bit with ^ aka XOR.
   // XOR flag is high IFF bits have different truth values.
   int five = four ^ (1UL << 0);
@@ -31,7 +31,7 @@ int main() {
 
   // NOTE: order of eval is (-x ^ thirteen) & (1UL << 3) get eval'd.
   // Then thirteen is ^ with the intermediate result of prev computation.
-  int thirteen = 13;  // 0b1101
+  int thirteen = 13; // 0b1101
   int bit_cleared = thirteen ^ (-x ^ thirteen) & (1UL << 3);
   printf("%d, after clearing bit %d is now %d\n", thirteen, 3, bit_cleared);
   x = 1;

@@ -21,9 +21,9 @@ int Count(ForwardList *fl);
 ForwardList *Reverse(ForwardList *n);
 bool HasCycle(ForwardList *n);
 
-
 ForwardList *Back(ForwardList *fl) {
-  if (!fl->right) return fl;
+  if (!fl->right)
+    return fl;
   ForwardList *r = fl;
   while (fl) {
     r = fl;
@@ -33,7 +33,8 @@ ForwardList *Back(ForwardList *fl) {
 }
 
 ForwardList *Add(ForwardList *to, ForwardList *n) {
-  if (!to) return n;
+  if (!to)
+    return n;
   Back(to)->right = n;
   return n;
 }
@@ -43,17 +44,20 @@ ForwardList *Add(ForwardList *to, int value) {
 }
 
 ForwardList *Add(ForwardList *to, std::initializer_list<int> values) {
-  for (auto it = values.begin(); it != values.end(); it++) to = Add(to, *it);
+  for (auto it = values.begin(); it != values.end(); it++)
+    to = Add(to, *it);
   return to;
 }
 
 ForwardList *NewForwardList(std::initializer_list<int> values) {
-  if (values.begin() == values.end()) return nullptr;
+  if (values.begin() == values.end())
+    return nullptr;
   ForwardList *n = new ForwardList{0, nullptr};
   ForwardList *i = n;
   auto it = values.begin();
   n->value = *it++;
-  for (; it != values.end(); it++) i = Add(i, *it);
+  for (; it != values.end(); it++)
+    i = Add(i, *it);
   return n;
 }
 
@@ -77,8 +81,10 @@ int Count(ForwardList *fl) {
 }
 
 ForwardList *Merge(ForwardList *l, ForwardList *r) {
-  if (!l) return r;
-  if (!r) return l;
+  if (!l)
+    return r;
+  if (!r)
+    return l;
   Back(l)->right = r;
   return l;
 }
@@ -109,14 +115,17 @@ ForwardList *Reverse(ForwardList *n) {
 bool HasCycle(ForwardList *n) {
   ForwardList *dn = n->right;
   while (dn) {
-    if (dn) dn = dn->right;
-    if (dn) dn = dn->right;
-    if (n) n = n->right;
-    if (n == dn) return true;
+    if (dn)
+      dn = dn->right;
+    if (dn)
+      dn = dn->right;
+    if (n)
+      n = n->right;
+    if (n == dn)
+      return true;
   }
   return false;
 }
-
 
 int main() {
   ForwardList *fl = NewForwardList({});
@@ -173,7 +182,7 @@ int main() {
   printf("Cycle in {1->2->3->4->null} ?: %d\n", HasCycle(nocycle));
   ForwardList *cycle = nocycle;
   ForwardList *b = Back(cycle);
-  Add(b, cycle);  // Create cycle
+  Add(b, cycle); // Create cycle
   printf("Cycle in {1->2->3->4->1} ?: %d\n", HasCycle(cycle));
 
   return 0;
