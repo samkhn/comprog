@@ -18,10 +18,11 @@ int MaxKnapsackWeight(const Knapsack &os, int capacity) {
                                   std::vector<int>(capacity + 1, 0));
   for (int i = 1; i <= object_count; ++i) {
     for (int j = 0; j <= capacity; ++j) {
-      if (os[i-1].second > j) {
-        m[i][j] = m[i-1][j];
+      if (os[i - 1].second > j) {
+        m[i][j] = m[i - 1][j];
       } else {
-        m[i][j] = std::max(m[i-1][j], os[i-1].first+m[i-1][j-os[i-1].second]);
+        m[i][j] = std::max(m[i - 1][j],
+                           os[i - 1].first + m[i - 1][j - os[i - 1].second]);
       }
     }
   }

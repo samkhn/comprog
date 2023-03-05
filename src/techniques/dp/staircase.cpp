@@ -15,15 +15,15 @@ int countWaysToClimb(std::vector<int> &m, int n) {
     return n;
   }
   if (m[n] == 0) {
-    int takeOne = countWaysToClimb(m, n-1);
-    int takeTwo = countWaysToClimb(m, n-2);
+    int takeOne = countWaysToClimb(m, n - 1);
+    int takeTwo = countWaysToClimb(m, n - 2);
     m[n] = takeOne + takeTwo;
   }
   return m[n];
 }
 
 int CountWaysToClimbStairs(int n) {
-  std::vector<int> m(n+1, 0);
+  std::vector<int> m(n + 1, 0);
   return countWaysToClimb(m, n);
 }
 
@@ -35,8 +35,8 @@ struct TestCase {
 
 int main() {
   std::vector<TestCase> tests = {
-    {"Ex1", 2, 2},
-    {"Ex2", 3, 3},
+      {"Ex1", 2, 2},
+      {"Ex2", 3, 3},
   };
 
   for (auto t : tests) {

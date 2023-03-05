@@ -36,9 +36,9 @@ struct TestCase {
 
 int main() {
   std::vector<TestCase> tests = {
-    {"Ex1", "abcde", "ace", 3},
-    {"Ex2", "abc", "abc", 3},
-    {"Ex3", "abc", "d", 0},
+      {"Ex1", "abcde", "ace", 3},
+      {"Ex2", "abc", "abc", 3},
+      {"Ex3", "abc", "d", 0},
   };
   for (auto t : tests) {
     if (LongestCommonSubsequence(t.in1, t.in2) != t.want) {
