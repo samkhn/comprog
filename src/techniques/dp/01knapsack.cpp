@@ -13,38 +13,40 @@
 using Knapsack = std::vector<std::pair<int, int>>;
 
 int MaxKnapsackWeight(const Knapsack &os, int capacity) {
-	int object_count = os.size();
-	std::vector<std::vector<int>> m(object_count + 1, std::vector<int>(capacity + 1, 0));
-	for (int i = 1; i <= object_count; ++i) {
-		for (int j = 0; j <= capacity; ++j) {
-			if (os[i - 1].second > j) {
-				m[i][j] = m[i - 1][j];
-			} else {
-				m[i][j] = std::max(m[i - 1][j], os[i - 1].first + m[i - 1][j - os[i - 1].second]);
-			}
-		}
-	}
-	return m[object_count][capacity];
+  int object_count = os.size();
+  std::vector<std::vector<int>> m(object_count + 1,
+                                  std::vector<int>(capacity + 1, 0));
+  for (int i = 1; i <= object_count; ++i) {
+    for (int j = 0; j <= capacity; ++j) {
+      if (os[i - 1].second > j) {
+        m[i][j] = m[i - 1][j];
+      } else {
+        m[i][j] = std::max(m[i - 1][j],
+                           os[i - 1].first + m[i - 1][j - os[i - 1].second]);
+      }
+    }
+  }
+  return m[object_count][capacity];
 }
 
 struct TestCase {
-	std::string name;
-	Knapsack in_objects;
-	int in_capacity;
-	int want;
+  std::string name;
+  Knapsack in_objects;
+  int in_capacity;
+  int want;
 };
 
 int main() {
-	std::vector<TestCase> tests = {
-			{"Ex1", {}, 1, 0},
-			{"Ex2", {{2, 3}, {2, 1}, {4, 3}, {5, 4}, {3, 2}}, 7, 10},
-	};
-	for (auto t : tests) {
-		if (MaxKnapsackWeight(t.in_objects, t.in_capacity) != t.want) {
-			std::cout << "FAIL " << t.name << "\n";
-		} else {
-			std::cout << "PASS " << t.name << "\n";
-		}
-	}
-	return 0;
+  std::vector<TestCase> tests = {
+      {"Ex1", {}, 1, 0},
+      {"Ex2", {{2, 3}, {2, 1}, {4, 3}, {5, 4}, {3, 2}}, 7, 10},
+  };
+  for (auto t : tests) {
+    if (MaxKnapsackWeight(t.in_objects, t.in_capacity) != t.want) {
+      std::cout << "FAIL " << t.name << "\n";
+    } else {
+      std::cout << "PASS " << t.name << "\n";
+    }
+  }
+  return 0;
 }

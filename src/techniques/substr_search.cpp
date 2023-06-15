@@ -12,9 +12,9 @@
 
 enum class SearchType {
   DUMB /*O(mn)*/,
-  STL  /*O(mn)*/,
-  RK   /*Rabin Karp. Average O(n) but worst case is O(mn)*/,
-  KMP  /*Knuth Morris Pratt. O(m)preprocessing + O(n)search*/
+  STL /*O(mn)*/,
+  RK /*Rabin Karp. Average O(n) but worst case is O(mn)*/,
+  KMP /*Knuth Morris Pratt. O(m)preprocessing + O(n)search*/
 };
 
 std::string ToString(SearchType a) {
@@ -111,7 +111,7 @@ int findSubstrKMP(std::string_view space, std::string_view query) {
     // are scanning.
     // If j != 0, we need to jump to the next appropriate spot using
     // lpp. Check LongestProperPrefixTable() for more details.
-    // If j == 0, we can move i up and restart the scan.    
+    // If j == 0, we can move i up and restart the scan.
     if (j != 0)
       j = lpp[j - 1];
     else
@@ -126,7 +126,7 @@ int findSubstrKMP(std::string_view space, std::string_view query) {
 // -2 on error
 // -3 on unimplemented
 int FindSubstr(SearchType algorithm, std::string_view space,
-                std::string_view query) {
+               std::string_view query) {
   if (query.size() == 0) return 0;
   if (query.size() > space.size()) return -1;
   switch (algorithm) {
@@ -177,13 +177,12 @@ void run(SubstrSearchTest *tests, SearchType a) {
 
 int main() {
   // First, a look at DJBHash
-  std::vector<std::string> hash_tests({
-    "This", "is", "a", "test", "of", "DJBHash", "which", "uses", "5381"
-    });
+  std::vector<std::string> hash_tests(
+      {"This", "is", "a", "test", "of", "DJBHash", "which", "uses", "5381"});
   for (const auto &t : hash_tests) {
     printf("DJBHash(%s) = %d\n", t.c_str(), DJBHash(t));
   }
-  hash_tests = { "g", "gr", "gro", "grow", "growi", "growin", "growing" };
+  hash_tests = {"g", "gr", "gro", "grow", "growi", "growin", "growing"};
   for (const auto &t : hash_tests) {
     printf("DJBHash(%s) = %d\n", t.c_str(), DJBHash(t));
   }
