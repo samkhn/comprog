@@ -9,6 +9,8 @@ pushd $(dirname $0)
 PROJECT_DIR=$(pwd)
 BUILD_DIR=$PROJECT_DIR/build
 
+bash format-clang.sh
+
 if [ ! -d "$BUILD_DIR" ]; then
 	mkdir -p $BUILD_DIR
 	cmake -B $BUILD_DIR -G Ninja -S $PROJECT_DIR
