@@ -1,4 +1,5 @@
-// List
+// Forward List
+// More interesting techniques is merging and cycle detection
 // TODO: double linked list
 
 #include <initializer_list>
@@ -8,6 +9,7 @@ struct ForwardList {
   int value;
   ForwardList *right;
 };
+
 static constexpr ForwardList kSentinelFLNode = ForwardList{0, nullptr};
 
 std::string Serialize(ForwardList *fl);

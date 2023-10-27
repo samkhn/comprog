@@ -2,17 +2,17 @@
 
 Personal reference for some common or interesting data structures I see.
 
-This is structured as a set of binaries/tests that validate some data structure defined in the same file.
+Every cpp file is a self-contained binary.
 
-### Requirements
+## Requirements
 
-- CMake version 3.5
-- C++ compiler with at least C++17 and the STL
+- g++ compiler with at least C++17
+- bash
 
-### Build
+## Build
 
 ```bash
-$ mkdir -p build
-$ cmake -B build -S .
+source cp.bash  # add this to bashrc if you want
+cd structures
+cpr graph
 ```
-

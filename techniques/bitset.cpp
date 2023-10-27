@@ -2,7 +2,6 @@
 
 #include <bitset>
 #include <cassert>
-#include <iostream>
 
 int main() {
   std::bitset<4> a;
@@ -40,6 +39,19 @@ int main() {
   assert(b.size() == 4);
   assert(b.to_ullong() == 0b0100ULL);
   assert(b.to_string() == "0100");
+
+  // If you suspect overflow on 1UL, use 1ULL.
+  // Flip a bit (regardless of initial value)
+  // NOTE: order of eval is (-x ^ thirteen) & (1UL << 3) get eval'd.
+  // Then thirteen is ^ with the intermediate result of prev computation.
+  int thirteen = 13;  // 0b1101
+  int x;
+  x = 0;
+  int bit_cleared = thirteen ^ (-x ^ thirteen) & (1UL << 3);
+  x = 1;
+  int bit_reset = bit_cleared ^ (-x ^ bit_cleared) & (1UL << 3);
+  assert(bit_reset == thirteen);
+  assert(bit_cleared == 5);
 
   return 0;
 }

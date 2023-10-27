@@ -5,7 +5,6 @@
 // can you climb to the top?
 // Note: Given n will be a positive integer.
 
-#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>

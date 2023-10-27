@@ -82,8 +82,8 @@ class Graph {
     return elements;
   }
 
-  void Init(bool dired, std::initializer_list<Edge> edges) {
-    this->dired = dired;
+  void Init(bool is_dired, std::initializer_list<Edge> edges) {
+    this->dired = is_dired;
     this->node_count = 0;
     this->edge_count = 0;
     for (auto edge_it = edges.begin(); edge_it != edges.end(); edge_it++) {
@@ -208,7 +208,7 @@ class Graph {
           }
           printf("Parents diff. Union(%d, %d) ", l, r);
           uf.Union(l, r);
-          for (int i = 0; i < uf.parents.size(); i++) {
+          for (int i = 0; i < (int)uf.parents.size(); i++) {
             printf("%d ", uf.parents[i]);
           }
           printf("\n");

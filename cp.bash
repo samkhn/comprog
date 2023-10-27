@@ -10,4 +10,5 @@ cpcc() {
 # $ cpr problem1
 cpr() {
       cpcc $1 && ./$1;
+      rm $1;
 }
